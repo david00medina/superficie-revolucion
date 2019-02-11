@@ -9,18 +9,14 @@ public class LinearRotation3D {
   int weight;
   int[] color3DModel;
   int[] figureFill;
-  float angleX;
-  float angleY;
   
-  public LinearRotation3D(int longitude, float angleX, float angleY, int weight, int[] color3DModel, int[] figureFill) {
+  public LinearRotation3D(int longitude, int weight, int[] color3DModel, int[] figureFill) {
     this.longitude = longitude;
     latitude = -1;
     this.weight = weight;
     this.color3DModel= color3DModel;
     this.figureFill = figureFill;
     stripes = new ArrayList<PShape>();
-    this.angleX = angleX;
-    this.angleY = angleY;
   }
   
   public void createSurface(Profile3D p) {
@@ -92,11 +88,6 @@ public class LinearRotation3D {
     this.latitude = latitude;
   }
   
-  public void doRotation(PVector vDir) {
-    PVector centroid = getCentroid();
-    bodyRotateY(vDir.y, centroid.y);
-  }
-  
   public PVector getCentroid() {
     int xSum = 0, ySum = 0, zSum = 0;
     int numPoints = latitude*longitude;
@@ -109,18 +100,5 @@ public class LinearRotation3D {
       }
     }
     return new PVector(xSum/numPoints, ySum/numPoints, zSum/numPoints);
-  }
-  
-  public void bodyRotateY(float yDir, float centroid) {
-    float theta = angleY/yDir;
-    for(int i = 0; i < longitude; i++) {
-      for(int j = 0; j < latitude; j++) {
-        PVector p = pointCloud[i][j];
-        float gamma = centroid;
-        p.x = (p.x - gamma)*cos(theta) - p.z*sin(theta) + gamma;
-        p.y = p.y;
-        p.z = (p.x - gamma)*sin(theta) + p.z*cos(theta);
-      }
-    }
   }
 }

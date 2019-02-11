@@ -11,14 +11,8 @@ int[] figureColor = {0, 200, 0};
 int[] figureFill = {220, 220, 220};
 int figureWeight = 3;
 
-int longitude = 20;//20
+int longitude = 20;
 float angle = 360/longitude;
-
-float angleX = radians(0.5);
-float angleY = radians(0.5);
-
-int initMouseX;
-int initMouseY;
 
 void setup(){
   size(800,800, P3D);
@@ -26,7 +20,7 @@ void setup(){
   drawingMode = true;
   
   p = new Profile3D(figureWeight, figureColor);
-  lr = new LinearRotation3D(longitude, angleX, angleY, figureWeight, figureColor, figureFill);
+  lr = new LinearRotation3D(longitude, figureWeight, figureColor, figureFill);
 }
 
 void draw() {
@@ -45,21 +39,6 @@ void draw() {
 void mouseClicked() {
   if(drawingMode) {
     p.addVertex(mouseX, mouseY, 0);
-  }
-}
-
-void mouseDragged() {
-  if(!drawingMode) {
-    PVector rotationDir = new PVector(mouseX - initMouseX, mouseY - initMouseY, 0);
-    println(rotationDir);
-    lr.doRotation(rotationDir);
-  }
-}
-
-void mouseMoved() {
-  if(!drawingMode) {
-    initMouseX = mouseX;
-    initMouseY = mouseY;
   }
 }
 
